@@ -5,15 +5,26 @@ const express = require("express");
 const app = express();
 const router = express.Router();
 const path = require("path");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const port = parseInt(process.env.PORT) || 4000;
 
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  res.setHeader("Access-Control-Allow-Methods", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
 app.use(
-  bodyParser.urlencoded({
+  express.json(),
+  cors(),
+  router,
+  express.urlencoded({
     extended: true,
   })
 );
-app.use(express.json(), router, bodyParser);
 
 app.listen(port, (err) => {
   if (err) throw err;
@@ -65,7 +76,7 @@ router.get(`/products/:id`, (req, res) => {
   });
 });
 
-router.post("/product", bodyParser.json(), (req, res) => {
+router.post("/products", bodyParser.json(), (req, res) => {
   let {
     gpuNoA,
     gpuNrAr,
@@ -81,6 +92,20 @@ router.post("/product", bodyParser.json(), (req, res) => {
   let newProduct = `Insert into products(gpuNoA,gpuNrAr,gpuGen,gpuChip,released,memoryGb,memoryType,memoryBit,gpuClock,memoryClock)
                     Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
 
-  db.query(newProduct,{gpuNoA,gpuNrAr,gpuGen,gpuChip,released,memoryGb,memoryType,memoryBit,gpuClock,memoryClock})
+  db.query(newProduct, [
+    gpuNoA,
+    gpuNrAr,
+    gpuGen,
+    gpuChip,
+    released,
+    memoryGb,
+    memoryType,
+    memoryBit,
+    gpuClock,
+    memoryClock,
+  ],(err,newProduct) => {
+    if(err) throw err
+    console.log(newProduct.affectedRows)
+  });
 });
 // ========================================================= //
