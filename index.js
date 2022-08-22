@@ -8,11 +8,12 @@ const port = parseInt(process.env.PORT) || 4000
 
 app.use(express.json(),route)
 
-route.get('/',(req,res) => {
-    res.sendFile('./index.html', {root : __dirname})
-})
-
 app.listen(port,(err) => {
     if(err) throw err
     console.log(`Sever is running on http://localhost:${port}`)
 })
+
+route.get('/',(req,res) => {
+    res.sendFile('./index.html', {root : __dirname})
+})
+
