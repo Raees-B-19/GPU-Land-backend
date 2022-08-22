@@ -9,10 +9,8 @@ const port = parseInt(process.env.PORT) || 4000
 app.use(express.json(),route)
 
 route.get('/',(req,res) => {
-    res.send(`I am here to fetch some data`)
+    res.sendFile('./index.html', {root : __dirname})
 })
-
-
 
 app.listen(port,(err) => {
     if(err) throw err
