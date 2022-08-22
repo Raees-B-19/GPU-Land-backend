@@ -4,6 +4,7 @@ const mysql = require('mysql')
 const express = require('express')
 const app = express()
 const router = express.Router()
+const path = require('path')
 const bodyParser = require('body-parser')
 const port = parseInt(process.env.PORT) || 4000
 
@@ -18,14 +19,16 @@ app.listen(port,(err) => {
 })
 
 router.get('/',(req,res) => {
-    res.sendFile('./index.html', {root : __dirname})
+    res.sendFile(path.join(__dirname,'./views','/index.html'))
 })
+
+router.get
 
 router.get('/products',bodyParser.json(),(req,res) => {
     let gettingProducts = `Select * from products;`
     db.query(gettingProducts,(err,products) => {
         if(err){
-            res.send(404)
+            res.sendFile(path.join(__dirname,'./views','/404.html'))
             console.log(err)
         }else{
             res.json({
@@ -40,10 +43,10 @@ router.get(`/products/:id`,bodyParser.json(),(req,res) => {
     let getSingleProduct = `Select * from products Where gpu_id = ${req.params.id}`
     db.query(getSingleProduct,(err,product) => {
         if(err){
-            res.send(404)
+            res.sendFile(path.join(__dirname,'./views','/404.html'))
             console.log(err)
         }else if(product == '' || null){
-            res.send(404)
+            res.sendFile(path.join(__dirname,'./views','/404.html'))
             console.log(err)
         }else{
             res.json({
