@@ -47,7 +47,7 @@ router.get("/products", (req, res) => {
 
     db.query(gettingProducts, (err, products) => {
         if (err) {
-            // res.redirect("/error");
+            res.redirect("/error");
             console.log(err);
         } else {
             res.json({
