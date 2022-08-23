@@ -7,6 +7,7 @@ const router = express.Router();
 const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const bcrypt = require('bcrypt')
 const port = parseInt(process.env.PORT) || 4000;
 
 app.use((req, res, next) => {
@@ -37,6 +38,10 @@ router.get("/", (req, res) => {
 
 router.get("/error", (req, res) => {
     res.sendFile(path.join(__dirname, "./views", "/404.html"));
+});
+
+router.get("/register", (req, res) => {
+    res.sendFile(path.join(__dirname, "./views", "/register.html"));
 });
 
 // ================== Product data ==================== //
@@ -162,10 +167,15 @@ router.put('/products/:id', bodyParser.json(), (req, res) => {
     })
 })
 
-router.delete('/products/:id',(req, res) => {
+router.delete('/products/:id', (req, res) => {
     let deleteProduct = `delete from products where gpu_id = ${req.params.id}`
-    db.query(deleteProduct,(err) => {
-        if(err) throw err
+    db.query(deleteProduct, (err) => {
+        if (err) {
+            res.redirect('/error')
+            console.log(err)
+        }
     })
 })
 // ========================================================= //
+
+// Register
