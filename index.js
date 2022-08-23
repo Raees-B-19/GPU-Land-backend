@@ -108,4 +108,47 @@ router.post("/products", bodyParser.json(), (req, res) => {
     console.log(newProduct.affectedRows)
   });
 });
+
+router.put('/products/:id',bodyParser.json(),(req,res) => {
+    let{
+        gpuNoA,
+        gpuNrAr,
+        gpuGen,
+        gpuChip,
+        released,
+        memoryGb,
+        memoryType,
+        memoryBit,
+        gpuClock,
+        memoryClock,
+    } = req.body
+    let editProduct = `Update products SET
+        gpuNoA = ? ,
+        gpuNrAr = ? ,
+        gpuGen = ? ,
+        gpuChip = ? ,
+        released = ? ,
+        memoryGb = ? ,
+        memoryType = ? ,
+        memoryBit = ? ,
+        gpuClock = ? ,
+        memoryClock = ?
+        Where gpu_id = ${req.params.id}
+    `
+    db.query(editProduct,[
+        gpuNoA,
+        gpuNrAr,
+        gpuGen,
+        gpuChip,
+        released,
+        memoryGb,
+        memoryType,
+        memoryBit,
+        gpuClock,
+        memoryClock,
+    ],(err,editedProduct) => {
+        if(err) throw err
+        res.end(JSON.stringify(editedProduct))
+    })
+})
 // ========================================================= //
