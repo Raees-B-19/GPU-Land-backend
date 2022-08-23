@@ -179,48 +179,40 @@ router.delete('/products/:id', (req, res) => {
 // ========================================================= //
 
 // Register
-router.post('/register', bodyParser.json(), async (req, res) => {
+router.post('/register',bodyParser.json(),(req, res) => {
     let checkEmail = {
         email: req.body.email
     }
-    let checkEmail1 = `Select from users where email = ?`
-    db.query(checkEmail1, checkEmail.email, (err, email) => {
-        if (err) {
-            res.redirect('/error')
-            console.log(err)
-        } else if (email.length > 0) {
+    let checkEmail1 = `Select * from users where email = ?`
+    db.query(checkEmail1, checkEmail.email, async (err, emails) => {
+        if (err) throw err
+        if (emails.length > 0) {
             res.json({
                 status: 400,
                 msg: 'This email already exist'
             })
-        } else {
+        }else {
             let {
                 userFName,
                 userLName,
                 email,
-                password,
-                userRole
+                userPassword,
             } = req.body
-            let hashedPassword = await bcrypt.hash(password, 10)
-            let register = `Insert into users(userFName,userLName,email,password,userRole)
-                            Values(userFName,userLName,email,password,userRole)`
+            let hash = await bcrypt.hash(userPassword, 10)
+            let register = `Insert into users(userFName,userLName,email,userPassword)
+                            Values(?,?,?,?)`
 
             db.query(register, [
                 userFName,
                 userLName,
                 email,
-                hashedPassword,
-                userRole
+                hash,
             ], (err, registered) => {
-                if (err) {
-                    res.redirect('/error')
-                    console.log(err)
-                } else {
+                if (err) throw err
                     res.json({
                         status: 200,
                         msg: 'You are successfully registered'
                     })
-                }
             })
         }
     })
