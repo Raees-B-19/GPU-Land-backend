@@ -54,6 +54,18 @@ router.post('/users/:id/cart', bodyParser.json(), (req, res) => {
 
 })
 
-
+router.delete('/users/:id/cart',bodyParser.json(),(req,res) => {
+    let cart = `select cart from users where user_id = ${req.params.id};`
+    db.query(cart,(err,cartData) => {
+        if(err) throw err
+        let dataInCart = JSON.parse(cartData[0].cart)
+        let {
+            gpu_id
+        } = req.body
+        delete dataInCart.
+        console.log(dataInCart)
+        // console.log(dataInCart.splice(7, 1))
+    })
+})
 
 module.exports = router
