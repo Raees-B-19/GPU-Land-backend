@@ -71,7 +71,9 @@ router.put('/users/:id',bodyParser.json(),(req,res) => {
 
 // Delete a user
 router.delete('/users/:id',(req,res) => {
-    let deleteUser = `Delete from users where user_id = ${req.params.id}`
+    let deleteUser = `Delete from users where user_id = ${req.params.id};
+    ALTER TABLE users AUTO_INCREMENT = 1;
+    `
     db.query(deleteUser,(err,) => {
         if(err){
             res.redirect('/error')

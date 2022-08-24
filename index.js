@@ -6,6 +6,7 @@ const cors = require("cors");
 const authRoute = require('./routes/auth');
 const userRoute = require('./routes/user');
 const productRoute = require('./routes/products');
+const cartRoute = require('./routes/cart');
 const port = parseInt(process.env.PORT) || 4000;
 
 app.use((req, res, next) => {
@@ -27,6 +28,7 @@ app.use(
 app.use(authRoute);
 app.use(userRoute);
 app.use(productRoute);
+// app.use(cartRoute);
 
 app.listen(port, (err) => {
     if (err) throw err;

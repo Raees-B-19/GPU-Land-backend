@@ -129,7 +129,9 @@ router.put('/products/:id', bodyParser.json(), (req, res) => {
 })
 
 router.delete('/products/:id', (req, res) => {
-    let deleteProduct = `delete from products where gpu_id = ${req.params.id}`
+    let deleteProduct = `delete from products where gpu_id = ${req.params.id};
+    ALTER TABLE products AUTO_INCREMENT = 1;
+    `
     db.query(deleteProduct, (err) => {
         if (err) {
             res.redirect('/error')
