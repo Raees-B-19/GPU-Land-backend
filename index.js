@@ -291,7 +291,32 @@ router.get('/users/:id',(req,res) => {
 })
 
 // Edit a user
-router
+router.put('/users/:id',bodyParser.json(),(req,res) => {
+    let {
+        userFName,
+        userLName,
+        email,
+        userPassword,
+    } = req.body
+    let editUser = `Update users SET
+        userFName = ?,
+        userLName = ?,
+        email = ?,
+        userPassword = ?
+        Where user_id = ${req.params.id}
+    `
+    db.query(editUser,[
+        userFName,
+        userLName,
+        email,
+        userPassword,
+    ],(err,editedUser) => {
+        if(err){
+            res.redirect('/error')
+        }
+        res.end(JSON.stringify(editedUser))
+    })
+})
 
 // Delete a user
 router.delete('/users/:id',(req,res) => {
