@@ -258,3 +258,53 @@ router.get("/login", bodyParser.json(), (req, res) => {
         }
     })
 })
+
+// All users
+router.get('/users',(req,res) => {
+    let allUsers = `Select * from users`
+    db.query(allUsers,(err,users) => {
+        if(err){
+            res.redirect('/error')
+            console.log(err)
+        }else{
+            res.json({
+                status: 200,
+                results : users
+            })
+        }
+    })
+})
+
+// Single User
+router.get('/users/:id',(req,res) => {
+    let singleUser = `Select * from users where user_id = ${req.params.id}`
+    db.query(singleUser,(err,singleUser) => {
+        if(err){
+            res.redirect('error')
+        }else{
+            res.json({
+                status : 200,
+                results : singleUser
+            })
+        }
+    })
+})
+
+// Edit a user
+router
+
+// Delete a user
+router.delete('/users/:id',(req,res) => {
+    let deleteUser = `Delete from users where user_id = ${req.params.id}`
+    db.query(deleteUser,(err,) => {
+        if(err){
+            res.redirect('/error')
+            console.log(err)
+        }else{
+            res.json({
+                status: 200,
+                msg : `Your account is deleted`
+            })
+        }
+    })
+})
