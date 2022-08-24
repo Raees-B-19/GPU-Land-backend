@@ -220,14 +220,13 @@ router.post('/register', bodyParser.json(), (req, res) => {
 })
 
 // Login
-
 router.get("/login", bodyParser.json(), (req, res) => {
     let {
         email,
         userPassword
     } = req.body
-    let login = `Select * from users where email = ${email}`
-    db.query(login, [email, userPassword], (err, results) => {
+    let login = `Select * from users where email = ?`
+    db.query(login,email,(err, results) => {
         if (err) throw err
         if (results[0].email == 0) {
             res.json({
@@ -245,10 +244,16 @@ router.get("/login", bodyParser.json(), (req, res) => {
                 let user = {
                     user_id: results[0].user_id,
                     userFName: results[0].userFName,
+                    userLName: results[0].userLName,
                     email: results[0].email,
                     userPassword: results[0].userPassword,
                     userRole: results[0].userRole,
                 }
+                jwt.sign(user,process.env.jwtsecret,(err,token) => {
+                    if(err) throw err
+                    console.log(token)
+                })
+                // console.log(user)
             }
         }
     })
