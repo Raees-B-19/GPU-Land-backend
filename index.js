@@ -28,7 +28,7 @@ app.use(
 app.use(authRoute);
 app.use(userRoute);
 app.use(productRoute);
-// app.use(cartRoute);
+app.use(cartRoute);
 
 app.listen(port, (err) => {
     if (err) throw err;
