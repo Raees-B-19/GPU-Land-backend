@@ -8,6 +8,7 @@ const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const port = parseInt(process.env.PORT) || 4000;
 
 app.use((req, res, next) => {
@@ -179,7 +180,7 @@ router.delete('/products/:id', (req, res) => {
 // ========================================================= //
 
 // Register
-router.post('/register',bodyParser.json(),(req, res) => {
+router.post('/register', bodyParser.json(), (req, res) => {
     let checkEmail = {
         email: req.body.email
     }
@@ -191,7 +192,7 @@ router.post('/register',bodyParser.json(),(req, res) => {
                 status: 400,
                 msg: 'This email already exist'
             })
-        }else {
+        } else {
             let {
                 userFName,
                 userLName,
@@ -209,11 +210,46 @@ router.post('/register',bodyParser.json(),(req, res) => {
                 hash,
             ], (err, registered) => {
                 if (err) throw err
-                    res.json({
-                        status: 200,
-                        msg: 'You are successfully registered'
-                    })
+                res.json({
+                    status: 200,
+                    msg: 'You are successfully registered'
+                })
             })
+        }
+    })
+})
+
+// Login
+
+router.get("/login", bodyParser.json(), (req, res) => {
+    let {
+        email,
+        userPassword
+    } = req.body
+    let login = `Select * from users where email = ${email}`
+    db.query(login, [email, userPassword], (err, results) => {
+        if (err) throw err
+        if (results[0].email == 0) {
+            res.json({
+                status: 400,
+                msg: `Email doesn't exist`
+            })
+        }else{
+            let match = bcrypt.compare(userPassword, results[0].userPassword)
+            if (!match) {
+                res.json({
+                    status: 400,
+                    msg: `The password does not match`
+                })
+            }else{
+                let user = {
+                    user_id: results[0].user_id,
+                    userFName: results[0].userFName,
+                    email: results[0].email,
+                    userPassword: results[0].userPassword,
+                    userRole: results[0].userRole,
+                }
+            }
         }
     })
 })
