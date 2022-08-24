@@ -2,10 +2,7 @@ require("dotenv").config();
 const db = require("../config/dbMysql");
 const mysql = require("mysql");
 const express = require("express");
-const app = express();
 const router = express.Router();
-const path = require("path");
-const cors = require("cors");
 const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
