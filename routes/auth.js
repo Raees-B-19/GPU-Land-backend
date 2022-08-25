@@ -77,7 +77,7 @@ router.get("/login", bodyParser.json(), (req, res) => {
                     userPassword: results[0].userPassword,
                     userRole: results[0].userRole,
                 }
-                jwt.sign(user,process.env.jwtsecret,(err,token) => {
+                jwt.sign(user,process.env.jwtsecret,{expiresIn : "365d"},(err,token) => {
                     if(err) throw err
                     console.log(token)
                 })
