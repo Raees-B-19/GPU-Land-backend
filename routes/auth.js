@@ -80,6 +80,8 @@ router.get("/login", bodyParser.json(), (req, res) => {
                 jwt.sign(user,process.env.jwtsecret,{expiresIn : "365d"},(err,token) => {
                     if(err) throw err
                     console.log(token)
+                    let userToken = token
+                    console.log(userToken)
                 })
                 // console.log(user)
             }
