@@ -59,7 +59,8 @@ router.post("/products", bodyParser.json(), (req, res) => {
         memoryClock,
     } = req.body;
     let newProduct = `Insert into products(gpuNoA,gpuNrAr,gpuGen,gpuChip,released,memoryGb,memoryType,memoryBit,gpuClock,memoryClock)
-                    Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+                    Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                    ALTER TABLE products AUTO_INCREMENT = 1;`;
 
     db.query(newProduct, [
         gpuNoA,
