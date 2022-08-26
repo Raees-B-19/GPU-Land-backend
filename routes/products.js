@@ -94,7 +94,7 @@ router.put('/products/:id', bodyParser.json(), (req, res) => {
         memoryType,
         memoryBit,
         gpuClock,
-        memoryClock,
+        memoryClock
     } = req.body
     let editProduct = `Update products SET
         gpuNoA = ? ,
@@ -108,7 +108,7 @@ router.put('/products/:id', bodyParser.json(), (req, res) => {
         gpuClock = ? ,
         memoryClock = ?
         Where gpu_id = ${req.params.id}
-    `
+        `
     db.query(editProduct, [
         gpuNoA,
         gpuNrAr,
@@ -119,12 +119,13 @@ router.put('/products/:id', bodyParser.json(), (req, res) => {
         memoryType,
         memoryBit,
         gpuClock,
-        memoryClock,
+        memoryClock
     ], (err, editedProduct) => {
-        if (err) {
-            res.redirect("/error");
-            console.log(err);
-        }
+        // if (err) {
+        //     res.redirect("/error");
+        //     console.log(err);
+        // }
+        if(err) throw err
         res.end(JSON.stringify(editedProduct))
     })
 })
