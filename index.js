@@ -43,6 +43,8 @@ router.get("/error", (req, res) => {
     res.sendFile(path.join(__dirname, "./views", "/404.html"));
 });
 
-router.get("/register", (req, res) => {
-    res.sendFile(path.join(__dirname, "./views", "/register.html"));
-});
+// router.get("/register", (req, res) => {
+//     res.sendFile(path.join(__dirname, "./views", "/register.html"));
+// });
+
+router.get("*", (req, res) => res.status(404).redirect("/error"))
