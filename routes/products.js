@@ -47,6 +47,7 @@ router.get(`/products/:id`, (req, res) => {
 // Add product
 router.post("/products", bodyParser.json(), (req, res) => {
     let {
+        gpuFront_Img,
         gpuNoA,
         gpuNrAr,
         gpuGen,
@@ -58,10 +59,11 @@ router.post("/products", bodyParser.json(), (req, res) => {
         gpuClock,
         memoryClock
     } = req.body;
-    let newProduct = `Insert into products(gpuNoA,gpuNrAr,gpuGen,gpuChip,released,memoryGb,memoryType,memoryBit,gpuClock,memoryClock)
-                    Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+    let newProduct = `Insert into products(gpuFront_Img,gpuNoA,gpuNrAr,gpuGen,gpuChip,released,memoryGb,memoryType,memoryBit,gpuClock,memoryClock)
+                    Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
 
     db.query(newProduct, [
+        gpuFront_Img,
         gpuNoA,
         gpuNrAr,
         gpuGen,
@@ -84,6 +86,7 @@ router.post("/products", bodyParser.json(), (req, res) => {
 // Edit product
 router.put('/products/:id', bodyParser.json(), (req, res) => {
     let {
+        gpuFront_Img,
         gpuNoA,
         gpuNrAr,
         gpuGen,
@@ -96,6 +99,7 @@ router.put('/products/:id', bodyParser.json(), (req, res) => {
         memoryClock
     } = req.body
     let editProduct = `Update products SET
+        gpuFront_Img = ? ,
         gpuNoA = ? ,
         gpuNrAr = ? ,
         gpuGen = ? ,
@@ -109,6 +113,7 @@ router.put('/products/:id', bodyParser.json(), (req, res) => {
         Where gpu_id = ${req.params.id}
         `
     db.query(editProduct, [
+        gpuFront_Img,
         gpuNoA,
         gpuNrAr,
         gpuGen,
