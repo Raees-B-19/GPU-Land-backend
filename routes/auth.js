@@ -48,7 +48,7 @@ router.post('/register', bodyParser.json(), (req, res) => {
 })
 
 // Login
-router.get("/login", bodyParser.json(), (req, res) => {
+router.post("/login", bodyParser.json(), (req, res) => {
     let {
         email,
         userPassword
@@ -82,6 +82,9 @@ router.get("/login", bodyParser.json(), (req, res) => {
                     console.log(token)
                     let userToken = token
                     console.log(userToken)
+                    res.json({
+                        msg : userToken
+                    })
                 })
                 // console.log(user)
             }
