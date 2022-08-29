@@ -7,7 +7,7 @@ const authRoute = require('./routes/auth');
 const userRoute = require('./routes/user');
 const productRoute = require('./routes/products');
 const cartRoute = require('./routes/cart');
-const port = parseInt(process.env.PORT) || 4000;
+const port = parseInt(process.env.PORT) || 3001;
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");

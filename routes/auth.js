@@ -36,7 +36,7 @@ router.post('/register', bodyParser.json(), (req, res) => {
                 userLName,
                 email,
                 hash,
-            ], (err, registered) => {
+            ], (err, userData) => {
                 if (err) throw err
                 res.json({
                     status: 200,
