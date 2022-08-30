@@ -83,6 +83,7 @@ router.post("/login", bodyParser.json(), (req, res) => {
                     let userToken = token
                     console.log(userToken)
                     res.json({
+                        results : user,
                         msg : userToken
                     })
                 })
