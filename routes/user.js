@@ -35,6 +35,7 @@ router.get('/users/:id',(req,res) => {
         }else{
             res.json({
                 status : 200,
+                msg : `Single user ${singleUser[0].userFName}`,
                 results : singleUser
             })
         }
