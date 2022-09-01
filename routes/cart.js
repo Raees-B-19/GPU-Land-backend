@@ -12,10 +12,9 @@ router.get('/users/:id/cart', (req, res) => {
             res.redirect('/error')
             console.log(err)
         } else {
-            res.json({
-                status: 200,
-                results: JSON.parse(cart[0].cart)
-            })
+            res.json(
+                JSON.parse(cart[0].cart)
+            )
         }
     })
 })
@@ -93,13 +92,25 @@ router.post('/users/:id/cart', bodyParser.json(), (req, res) => {
             let product = `Select * FROM products WHERE gpu_id = ?`;
             // function
             db.query(product, gpu_id, (err, productData) => {
-                if (err) throw err
+                if (err) throw err;
+                // res.send(productData)
                 let data = {
                     cart_id: cart.length + 1,
-                    productData
+                    gpu_id: productData[0].gpu_id,
+                    gpuFront_Img: productData[0].gpuFront_Img,
+                    gpuNoA: productData[0].gpuNoA,
+                    gpuNrAr: productData[0].gpuNrAr,
+                    gpuGen: productData[0].gpuGen,
+                    gpuChip: productData[0].gpuChip,
+                    released: productData[0].released,
+                    memoryGb: productData[0].memoryGb,
+                    memoryType: productData[0].memoryType,
+                    memoryBit: productData[0].memoryBit,
+                    gpuClock: productData[0].gpuClock,
+                    memoryClock: productData[0].memoryClock,
                 }
                 cart.push(data)
-                console.log(cart);
+                // console.log(cart);
                 let updateCart = `UPDATE users SET cart = ? WHERE user_id = ${req.params.id}`
                 db.query(updateCart, JSON.stringify(cart), (err, results) => {
                     if (err) throw err
