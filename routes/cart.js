@@ -12,9 +12,9 @@ router.get('/users/:id/cart', (req, res) => {
             res.redirect('/error')
             console.log(err)
         } else {
-            res.json(
-                JSON.parse(cart[0].cart)
-            )
+            res.json({
+                results: JSON.parse(cart[0].cart)
+            })
         }
     })
 })
