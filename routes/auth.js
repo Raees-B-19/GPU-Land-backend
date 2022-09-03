@@ -48,27 +48,29 @@ router.post('/register', bodyParser.json(), (req, res) => {
 })
 
 // Login
-router.post("/login", bodyParser.json(), (req, res) => {
+router.post("/login", bodyParser.json(), async (req, res) => {
     let {
         email,
         userPassword
     } = req.body
     let login = `Select * from users where email = ?`
-    db.query(login,email,(err, results) => {
+    db.query(login, email, async (err, results) => {
         if (err) throw err
-        if (results[0].email == 0) {
+        // res.send(results[0].userPassword)
+        if (results.length === 0) {
             res.json({
                 status: 400,
                 msg: `Email doesn't exist`
             })
-        }else{
-            let match = bcrypt.compare(userPassword, results[0].userPassword)
-            if (!match) {
+        } else {
+            const match = await bcrypt.compare(userPassword, results[0].userPassword)
+            // res.send(match)
+            if (match === false) {
                 res.json({
                     status: 400,
                     msg: `The password does not match`
                 })
-            }else{
+            } else  {
                 let user = {
                     user_id: results[0].user_id,
                     userFName: results[0].userFName,
@@ -77,14 +79,17 @@ router.post("/login", bodyParser.json(), (req, res) => {
                     userPassword: results[0].userPassword,
                     userRole: results[0].userRole,
                 }
-                jwt.sign(user,process.env.jwtsecret,{expiresIn : "365d"},(err,token) => {
-                    if(err) throw err
-                    console.log(token)
+                jwt.sign(user, process.env.jwtsecret, {
+                    expiresIn: "365d"
+                }, (err, token) => {
+                    if (err) throw err
+                    // console.log(token)
                     let userToken = token
-                    console.log(userToken)
+                    // console.log(userToken)
                     res.json({
-                        results : user,
-                        msg : userToken
+                        results: user,
+                        token: userToken,
+                        msg : "login successful"
                     })
                 })
                 // console.log(user)
