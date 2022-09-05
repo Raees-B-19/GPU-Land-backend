@@ -48,6 +48,10 @@ router.get(`/products/:id`, (req, res) => {
 router.post("/products", bodyParser.json(), (req, res) => {
   let {
     gpuFront_Img,
+    gpuTop,
+    gpuBack,
+    gpuBottom,
+    gpuIo,
     gpuNoA,
     gpuNrAr,
     gpuGen,
@@ -58,14 +62,19 @@ router.post("/products", bodyParser.json(), (req, res) => {
     memoryBit,
     gpuClock,
     memoryClock,
+    price,
   } = req.body;
-  let newProduct = `Insert into products(gpuFront_Img,gpuNoA,gpuNrAr,gpuGen,gpuChip,released,memoryGb,memoryType,memoryBit,gpuClock,memoryClock)
-                    Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+  let newProduct = `Insert into products(gpuFront_Img, gpuTop, gpuBack, gpuBottom, gpuIo, gpuNoA, gpuNrAr, gpuGen, gpuChip, released, memoryGb, memoryType, memoryBit,gpuClock, memoryClock, price)
+                    Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
 
   db.query(
     newProduct,
     [
       gpuFront_Img,
+      gpuTop,
+      gpuBack,
+      gpuBottom,
+      gpuIo,
       gpuNoA,
       gpuNrAr,
       gpuGen,
@@ -76,6 +85,7 @@ router.post("/products", bodyParser.json(), (req, res) => {
       memoryBit,
       gpuClock,
       memoryClock,
+      price,
     ],
     (err, newProduct) => {
       if (err) throw err;
@@ -90,6 +100,10 @@ router.post("/products", bodyParser.json(), (req, res) => {
 router.put("/products/:id", bodyParser.json(), (req, res) => {
   let {
     gpuFront_Img,
+    gpuTop,
+    gpuBack,
+    gpuBottom,
+    gpuIo,
     gpuNoA,
     gpuNrAr,
     gpuGen,
@@ -100,9 +114,14 @@ router.put("/products/:id", bodyParser.json(), (req, res) => {
     memoryBit,
     gpuClock,
     memoryClock,
+    price,
   } = req.body;
   let editProduct = `Update products SET
         gpuFront_Img = ? ,
+        gpuTop = ? ,
+        gpuBack = ? ,
+        gpuBottom = ? ,
+        gpuIo = ? ,
         gpuNoA = ? ,
         gpuNrAr = ? ,
         gpuGen = ? ,
@@ -112,13 +131,18 @@ router.put("/products/:id", bodyParser.json(), (req, res) => {
         memoryType = ? ,
         memoryBit = ? ,
         gpuClock = ? ,
-        memoryClock = ?
+        memoryClock = ?,
+        price = ?
         Where gpu_id = ${req.params.id}
         `;
   db.query(
     editProduct,
     [
       gpuFront_Img,
+      gpuTop,
+      gpuBack,
+      gpuBottom,
+      gpuIo,
       gpuNoA,
       gpuNrAr,
       gpuGen,
@@ -129,6 +153,7 @@ router.put("/products/:id", bodyParser.json(), (req, res) => {
       memoryBit,
       gpuClock,
       memoryClock,
+      price,
     ],
     (err, editedProduct) => {
       // if (err) {
@@ -157,15 +182,15 @@ router.post("/products/reset", bodyParser.json(), (req, res) => {
   let products = `Select * from products`;
   db.query(products, (err, products) => {
     if (err) throw err;
-    console.log(products.length)
-    let length = products.length
-    let resetID = `ALTER TABLE products AUTO_INCREMENT = ?;`
-    db.query(resetID,length,(err,results) => {
-        if(err) throw err
-        res.json({
-            msg: `Auto increment is ${products.length}`
-        })
-    })
+    console.log(products.length);
+    let length = products.length;
+    let resetID = `ALTER TABLE products AUTO_INCREMENT = ?;`;
+    db.query(resetID, length, (err, results) => {
+      if (err) throw err;
+      res.json({
+        msg: `Auto increment is ${products.length}`,
+      });
+    });
   });
 });
 // ========================================================= //
