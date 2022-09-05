@@ -168,22 +168,6 @@ router.post("/products/reset", bodyParser.json(), (req, res) => {
     })
   });
 });
-
-router.post("/products/reset", bodyParser.json(), (req, res) => {
-    let products = `Select * from products`;
-    db.query(products, (err, products) => {
-      if (err) throw err;
-      console.log(products.length)
-      let length = products.length
-      let resetID = `ALTER TABLE products AUTO_INCREMENT = ?;`
-      db.query(resetID,length,(err,results) => {
-          if(err) throw err
-          res.json({
-              msg: `Auto increment is ${products.length}`
-          })
-      })
-    });
-  });
 // ========================================================= //
 
 module.exports = router;
