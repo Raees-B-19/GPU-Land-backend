@@ -98,6 +98,9 @@ router.post('/users/:id/cart', bodyParser.json(), (req, res) => {
                     cart_id: cart.length + 1,
                     gpu_id: productData[0].gpu_id,
                     gpuFront_Img: productData[0].gpuFront_Img,
+                    gpuTop: productData[0].gpuTop,
+                    gpuBack: productData[0].gpuBack,
+                    gpuIo: productData[0].gpuIo,
                     gpuNoA: productData[0].gpuNoA,
                     gpuNrAr: productData[0].gpuNrAr,
                     gpuGen: productData[0].gpuGen,
@@ -108,6 +111,7 @@ router.post('/users/:id/cart', bodyParser.json(), (req, res) => {
                     memoryBit: productData[0].memoryBit,
                     gpuClock: productData[0].gpuClock,
                     memoryClock: productData[0].memoryClock,
+                    price: productData[0].price
                 }
                 cart.push(data)
                 // console.log(cart);
