@@ -49,12 +49,14 @@ router.put('/users/:id',bodyParser.json(),(req,res) => {
         userLName,
         email,
         userPassword,
+        userImg
     } = req.body
     let editUser = `Update users SET
         userFName = ?,
         userLName = ?,
         email = ?,
-        userPassword = ?
+        userPassword = ?,
+        userImg = ?
         Where user_id = ${req.params.id}
     `
     db.query(editUser,[
