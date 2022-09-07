@@ -64,6 +64,7 @@ router.put('/users/:id',bodyParser.json(),(req,res) => {
         userLName,
         email,
         userPassword,
+        userImg
     ],(err,editedUser) => {
         if(err){
             res.redirect('/error')
