@@ -80,6 +80,7 @@ router.post("/login", bodyParser.json(), async (req, res) => {
                     email: results[0].email,
                     userPassword: results[0].userPassword,
                     userRole: results[0].userRole,
+                    userImg: results[0].userImg
                 }
                 jwt.sign(user, process.env.jwtsecret, {
                     expiresIn: "365d"
