@@ -1,71 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Endpoints</title>
-    <style>
-      body {
-        display: flex;
-        flex-flow: column wrap;
-        align-items: center;
-        min-width: 99vw;
-        background: #1f1f1f;
-        color: #efefef;
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Endpoints</title>
+  <style>
+    body {
+      display: flex;
+      flex-flow: column wrap;
+      align-items: center;
+      min-width: 99vw;
+      background: #1f1f1f;
+      color: #efefef;
+    }
+
+    ul {
+      list-style: none;
+      font-size: 1.17em;
+      padding: 0;
+    }
+
+    li {
+      display: flex;
+      width: 325px;
+      margin: 2.5px 2.5px 2.5px 2.5px;
+      justify-content: space-between;
+      border-bottom: 1px solid black;
+      border-radius: 30px;
+      padding: 10px;
+      /* transition: all 0.35s; */
+    }
+
+    li:hover {
+      border-radius: 30px;
+      padding: 10px;
+      animation: rgb 5s infinite;
+    }
+
+    @keyframes rgb {
+
+      /* 0%  { color: #efefef; } */
+      13.3% {
+        border: 3px solid #df40ff;
+        border-radius: 30px;
+        padding: 10px;
+        width: 328px;
+        color: #df40ff
       }
 
-      ul {
-        list-style: none;
-        font-size: 1.17em;
-        padding: 0;
+      33.6% {
+        border: 1px solid #5b42f3;
+        border-radius: 10px;
+        padding: 10px;
+        width: 330px;
+        color: #5b42f3
       }
 
-      li {
-        display: flex;
-        width: 325px;
-        margin: 2.5px 2.5px 2.5px 2.5px;
-        justify-content: space-between;
-        border-bottom: 1px solid black;
-        transition: all 0.75s;
+      54% {
+        border: 1px solid #00ddeb;
+        border-radius: 10px;
+        padding: 10px;
+        width: 328px;
+        color: #00ddeb;
       }
-      h1 {
-        border-top: 1px solid black;
-        border-bottom: 1px solid black;
-        padding: 15px 0 15px 0;
-      }
-    </style>
-  </head>
-  <body>
-    <title>All Endpoints</title>
-    <h2>Register / Login</h2>
-    <ul>
-      <li><span>POST</span> <span>/register</span></li>
-      <li><span>POST</span> <span>/login</span></li>
-    </ul>
-    <h2>Users</h2>
-    <ul>
-      <li><span>GET</span> <span>/users</span></li>
-      <li><span>GET</span> <span>/users/:id</span></li>
-      <li><span>PUT</span> <span>/users/:id</span></li>
-      <li><span>DELETE</span> <span>/users/:id</span></li>
-    </ul>
-    <h2>Products:</h2>
-    <ul>
-      <li><span>GET</span> <span>/products</span></li>
-      <li><span>GET</span> <span>/products/:id</span></li>
-      <li><span>POST</span> <span>/products</span></li>
-      <li><span>POST</span> <span>/products/reset</span></li>
-      <li><span>PUT</span> <span>/products/:id</span></li>
-      <li><span>DELETE</span> <span>/products/:id</span></li>
-    </ul>
-    <h2>Cart:</h2>
-    <ul>
-      <li><span>GET</span> <span>/users/:id/cart</span></li>
-      <li><span>GET</span> <span>/users/:id/cart/:id</span></li>
-      <li><span>POST</span> <span>/users/:id/cart</span></li>
-      <li><span>DELETE</span> <span>/users/:id/cart</span></li>
-      <li><span>DELETE</span> <span>/users/:id/cart/:cartId</span></li>
-    </ul>
-  </body>
+    }
+
+    h1 {
+      border-top: 1px solid black;
+      border-bottom: 1px solid black;
+      padding: 15px 0 15px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <title>All Endpoints</title>
+  <h2>Register / Login</h2>
+  <ul>
+    <li><span>POST</span> <span>/register</span></li>
+    <li><span>POST</span> <span>/login</span></li>
+  </ul>
+  <h2>Users</h2>
+  <ul>
+    <li><span>GET</span> <span>/users</span></li>
+    <li><span>GET</span> <span>/users/:id</span></li>
+    <li><span>PUT</span> <span>/users/:id</span></li>
+    <li><span>DELETE</span> <span>/users/:id</span></li>
+  </ul>
+  <h2>Products:</h2>
+  <ul>
+    <li><span>GET</span> <span>/products</span></li>
+    <li><span>GET</span> <span>/products/:id</span></li>
+    <li><span>POST</span> <span>/products</span></li>
+    <li><span>POST</span> <span>/products/reset</span></li>
+    <li><span>PUT</span> <span>/products/:id</span></li>
+    <li><span>DELETE</span> <span>/products/:id</span></li>
+  </ul>
+  <h2>Cart:</h2>
+  <ul>
+    <li><span>GET</span> <span>/users/:id/cart</span></li>
+    <li><span>GET</span> <span>/users/:id/cart/:id</span></li>
+    <li><span>POST</span> <span>/users/:id/cart</span></li>
+    <li><span>DELETE</span> <span>/users/:id/cart</span></li>
+    <li><span>DELETE</span> <span>/users/:id/cart/:cartId</span></li>
+  </ul>
+</body>
+
 </html>
