@@ -54,4 +54,4 @@ app.get("*", (req, res) => {
 const {errorHandling} = require('./middleware/errorHandling');
 //   Place the below code at the bottom of index.js so that it catches all errors.
   // Taking care of all errors
-  app.use(errorHandling);
+app.use(errorHandling);
