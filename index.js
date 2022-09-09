@@ -36,7 +36,7 @@ app.listen(port, (err) => {
 });
 
 router.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "./views", "/index.html"));
+    res.sendFile(path.join(__dirname, "./public", "/index.html"));
 });
 
 router.get("/error", (req, res) => {
