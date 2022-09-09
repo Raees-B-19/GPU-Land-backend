@@ -26,16 +26,18 @@ router.post('/register', bodyParser.json(), (req, res) => {
                 userLName,
                 email,
                 userPassword,
+                userImg
             } = req.body
             let hash = await bcrypt.hash(userPassword, 10)
-            let register = `Insert into users(userFName,userLName,email,userPassword)
-                            Values(?,?,?,?)`
+            let register = `Insert into users(userFName,userLName,email,userPassword,userImg)
+                            Values(?,?,?,?.?)`
 
             db.query(register, [
                 userFName,
                 userLName,
                 email,
                 hash,
+                userImg
             ], (err, userData) => {
                 if (err) throw err
                 res.json({
@@ -78,7 +80,6 @@ router.post("/login", bodyParser.json(), async (req, res) => {
                     email: results[0].email,
                     userPassword: results[0].userPassword,
                     userRole: results[0].userRole,
-                    userImg: results[0].userImg
                 }
                 jwt.sign(user, process.env.jwtsecret, {
                     expiresIn: "365d"
