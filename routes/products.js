@@ -12,15 +12,17 @@ router.get("/products", (req, res) => {
   let gettingProducts = `Select * from products;`;
 
   db.query(gettingProducts, (err, products) => {
-    if (err) {
-      res.redirect("/error");
-      console.log(err);
-    } else {
-      res.json({
-        status: 200,
-        results: products,
-      });
-    }
+    // if (err) {
+    //   res.redirect("/error");
+    //   console.log(err);
+    // } else {
+
+    if (err) throw err;
+
+    res.json({
+      status: 200,
+      results: products,
+    });
   });
 });
 
@@ -29,12 +31,9 @@ router.get(`/products/:id`, (req, res) => {
   let getSingleProduct = `Select * from products Where gpu_id = ${req.params.id};`;
 
   db.query(getSingleProduct, (err, product) => {
-    if (err) {
-      res.redirect("/error");
-      console.log(err);
-    } else if (product == "" || null) {
-      res.redirect("/error");
-      console.log(err);
+    if (err) throw err 
+    if (product == "" || null) {
+      console.log(`No products in stock`);
     } else {
       res.json({
         status: 200,
