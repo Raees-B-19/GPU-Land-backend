@@ -35,7 +35,7 @@ app.listen(port, (err) => {
     console.log(`Sever is running on http://localhost:${port}`);
 });
 
-router.get("/", (req, res) => {
+app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "./public", "/index.html"));
 });
 
