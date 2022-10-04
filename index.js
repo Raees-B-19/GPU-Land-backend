@@ -39,17 +39,13 @@ router.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "./public", "/index.html"));
 });
 
-router.get("/error", (req, res) => {
-    res.sendFile(path.join(__dirname, "./views", "/404.html"));
-});
+// router.get("/error", (req, res) => {
+//     res.sendFile(path.join(__dirname, "./views", "/404.html"));
+// });
 
 app.get("*", (req, res) => {
     res.status(404).sendFile(path.join(__dirname, "./views", "/404.html"))
 })
-
-// router.get("/register", (req, res) => {
-//     res.sendFile(path.join(__dirname, "./views", "/register.html"));
-// });
 
 const {errorHandling} = require('./middleware/errorHandling');
 //   Place the below code at the bottom of index.js so that it catches all errors.

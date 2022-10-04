@@ -10,18 +10,14 @@ const con = mysql.createConnection({
   multipleStatements: true,
 });
 
-function restart() {
-  con.connect((err) => {
-    if (err) {
-      if (err.code === "PROTOCOL_CONNECTION_LOST") {
-        setTimeout(restart(), 2000);
-      } else {
-        console.log("Your Database is running");
-      }
+con.connect((err) => {
+  if (err){
+    console.log(err)
+  }
+  else {
+      console.log("Your Database is running");
     }
-  });
-}
-
-restart();
+  }
+);
 
 module.exports = con;
