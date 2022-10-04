@@ -1,21 +1,27 @@
-require('dotenv').config()
-const mysql = require('mysql')
+require("dotenv").config();
+const mysql = require("mysql");
 
 const con = mysql.createConnection({
-    host : process.env.dbHost,
-    user : process.env.dbUser,
-    password : process.env.dbPassword,
-    database : process.env.dbDatabasename,
-    port : process.env.dbPort,
-    multipleStatements : true
-})
+  host: process.env.dbHost,
+  user: process.env.dbUser,
+  password: process.env.dbPassword,
+  database: process.env.dbDatabasename,
+  port: process.env.dbPort,
+  multipleStatements: true,
+});
 
-con.connect((err) => {
-    if(err){
-        console.log(err)
-    }else{
-        console.log('Your Database is running')
+function restart() {
+  con.connect((err) => {
+    if (err) {
+      if (err.code === "PROTOCOL_CONNECTION_LOST") {
+        setTimeout(restart(), 2000);
+      } else {
+        console.log("Your Database is running");
+      }
     }
-})
+  });
+}
 
-module.exports = con
+restart();
+
+module.exports = restart();
