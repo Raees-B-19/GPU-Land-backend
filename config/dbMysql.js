@@ -24,4 +24,4 @@ function restart() {
 
 restart();
 
-module.exports = restart();
+module.exports = con;
