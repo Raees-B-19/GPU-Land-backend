@@ -8,8 +8,12 @@ const bodyParser = require("body-parser");
 router.get("/users/:id/cart", (req, res) => {
   let gettingCart = `Select cart from users where user_id = ${req.params.id}`;
   db.query(gettingCart, (err, cart) => {
-    if (err) throw err;
-    
+    if (err) {
+      res.json({
+        status: 400,
+        msg: "Cannot get this users cart",
+      });
+    }
     res.json({
       results: JSON.parse(cart[0].cart),
     });
@@ -73,7 +77,12 @@ router.post("/users/:id/cart", bodyParser.json(), (req, res) => {
   let cart = `SELECT cart FROM users WHERE user_id = ${req.params.id};`;
   // function
   db.query(cart, (err, results) => {
-    if (err) throw err;
+    if (err) {
+      res.json({
+        status: 400,
+        msg: "Cannot get this users cart",
+      });
+    }
     if (results.length > 0) {
       let cart;
       if (results[0].cart == null) {
@@ -86,7 +95,13 @@ router.post("/users/:id/cart", bodyParser.json(), (req, res) => {
       let product = `Select * FROM products WHERE gpu_id = ?`;
       // function
       db.query(product, gpu_id, (err, productData) => {
-        if (err) throw err;
+        if (err) {
+          res.json({
+            status: 400,
+            msg: "Cannot insert product into cart",
+            err: err,
+          });
+        }
         // res.send(productData)
         let data = {
           cart_id: cart.length + 1,
@@ -111,7 +126,13 @@ router.post("/users/:id/cart", bodyParser.json(), (req, res) => {
         // console.log(cart);
         let updateCart = `UPDATE users SET cart = ? WHERE user_id = ${req.params.id}`;
         db.query(updateCart, JSON.stringify(cart), (err, results) => {
-          if (err) throw err;
+          if (err) {
+            res.json({
+              status: 400,
+              msg: "Cannot add to the cart",
+              err: err,
+            });
+          }
           res.json({
             cart: results,
           });
@@ -128,7 +149,12 @@ router.delete("/users/:id/cart", (req, res) => {
         WHERE user_id = ${req.params.id}
     `;
   db.query(delCart, (err, results) => {
-    if (err) throw err;
+    if (err) {
+      res.json({
+        status: 400,
+        msg: "Cannot delete cart",
+      });
+    }
     if (results.length > 0) {
       const query = `
                 UPDATE users
@@ -136,7 +162,12 @@ router.delete("/users/:id/cart", (req, res) => {
                 WHERE user_id = ${req.params.id}
             `;
       db.query(query, (err, results) => {
-        if (err) throw err;
+        if (err) {
+          res.json({
+            status: 400,
+            msg: "Cannot clear cart",
+          });
+        }
         res.json({
           status: 200,
           results: `Successfully cleared the cart`,
@@ -158,7 +189,12 @@ router.delete("/users/:id/cart/:cartId", (req, res) => {
         WHERE user_id = ${req.params.id}
     `;
   db.query(delSingleCartId, (err, results) => {
-    if (err) throw err;
+    if (err){
+      res.json({
+        status : 400,
+        msg : 'Cannot delete this cart with user id'
+      })
+    }
 
     if (results.length > 0) {
       if (results[0].cart != null) {
@@ -175,7 +211,12 @@ router.delete("/users/:id/cart/:cartId", (req, res) => {
                 `;
 
         db.query(query, [JSON.stringify(result)], (err, results) => {
-          if (err) throw err;
+          if (err) {
+            res.json({
+              status : 400,
+              msg : 'Cannot delete item'
+            })
+          }
           res.json({
             status: 200,
             result: "Successfully deleted item from cart",

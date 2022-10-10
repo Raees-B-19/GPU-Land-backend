@@ -14,7 +14,12 @@ const jwt = require("jsonwebtoken");
 router.get("/users", (req, res) => {
   let allUsers = `Select * from users`;
   db.query(allUsers, (err, users) => {
-    if (err) throw err;
+    if (err){
+      res.json({
+        status : 400,
+        msg : 'No users in database'
+      })
+    }
     res.json({
       status: 200,
       results: users,
@@ -26,7 +31,12 @@ router.get("/users", (req, res) => {
 router.get("/users/:id", (req, res) => {
   let singleUser = `Select * from users where user_id = ${req.params.id}`;
   db.query(singleUser, (err, singleUser) => {
-    if (err) throw err;
+    if (err){
+      res.json({
+        status : 400,
+        msg : 'No user with this id'
+      })
+    }
     res.json({
       status: 200,
       msg: `Single user ${singleUser[0].userFName}`,
@@ -50,7 +60,12 @@ router.put("/users/:id", bodyParser.json(), (req, res) => {
     editUser,
     [userFName, userLName, email, userPassword, userImg],
     (err, editedUser) => {
-      if (err) throw err;
+      if (err){
+        res.json({
+          status : 400,
+          msg : 'Cannot edit this user'
+        })
+      }
       res.end(JSON.stringify(editedUser));
     }
   );
@@ -62,7 +77,12 @@ router.delete("/users/:id", (req, res) => {
     ALTER TABLE users AUTO_INCREMENT = 1;
     `;
   db.query(deleteUser, (err) => {
-    if (err) throw err;
+    if (err){
+      res.json({
+        status : 400,
+        msg : 'Cannot delete this user'
+      })
+    }
     res.json({
       status: 200,
       msg: `Your account is deleted`,

@@ -12,7 +12,11 @@ const con = mysql.createConnection({
 
 con.connect((err) => {
   if (err){
-    console.log(err)
+    res.json({
+      status : 400,
+      msg : 'Any err occurred',
+      err : err
+    })
   }
   else {
       console.log("Your Database is running");
