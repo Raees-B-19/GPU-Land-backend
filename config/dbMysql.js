@@ -19,7 +19,7 @@ con.connect((err) => {
     })
   }
   else {
-      console.log("Your Database is running");
+      console.log("Your Database is running on render");
     }
   }
 );
