@@ -1,16 +1,25 @@
 require("dotenv").config();
 const mysql = require("mysql");
 
-const con = mysql.createConnection({
+// const con = mysql.createConnection({
+//   host: process.env.dbHost,
+//   user: process.env.dbUser,
+//   password: process.env.dbPassword,
+//   database: process.env.dbDatabasename,
+//   port: process.env.dbPort,
+//   multipleStatements: true,
+// });
+const con = mysql.createPool({
+  connectionLimit: 5,
   host: process.env.dbHost,
   user: process.env.dbUser,
   password: process.env.dbPassword,
   database: process.env.dbDatabasename,
   port: process.env.dbPort,
-  multipleStatements: true,
+  multipleStatements: true
 });
 
-con.connect((err) => {
+con.getConnection((err) => {
   if (err){
     res.json({
       status : 400,
@@ -23,5 +32,18 @@ con.connect((err) => {
     }
   }
 );
+// con.connect((err) => {
+//   if (err){
+//     res.json({
+//       status : 400,
+//       msg : 'Any err occurred',
+//       err : err
+//     })
+//   }
+//   else {
+//       console.log("Your Database is running on render");
+//     }
+//   }
+// );
 
 module.exports = con;
